@@ -21,9 +21,9 @@ st.write("CSS Loaded!" if get_css_styles() else "CSS Failed!")
 
 
 
-# Initialize session state
+# Initialize session state with fixed deadline
 if 'deadline' not in st.session_state:
-    st.session_state.deadline = datetime.datetime.now() + datetime.timedelta(days=30)
+    st.session_state.deadline = datetime.datetime(2025, 9, 15)  # Fixed deadline: September 15, 2025
 
 if 'completed_steps' not in st.session_state:
     st.session_state.completed_steps = set()
