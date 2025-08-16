@@ -17,13 +17,15 @@ from sections import *
 
 # Load CSS styles FIRST - this is critical for proper rendering
 st.markdown(get_css_styles(), unsafe_allow_html=True)
-st.write("CSS Loaded!" if get_css_styles() else "CSS Failed!")
 
 
 
 # Initialize session state
 if 'deadline' not in st.session_state:
-    st.session_state.deadline = datetime.datetime.now() + datetime.timedelta(days=30)
+    # Set a fixed deadline for the mission (e.g., end of the current year)
+    # This ensures the countdown is consistent across all users and sessions
+    current_year = datetime.datetime.now().year
+    st.session_state.deadline = datetime.datetime(current_year, 12, 31, 23, 59, 59)
 
 if 'completed_steps' not in st.session_state:
     st.session_state.completed_steps = set()
@@ -215,7 +217,9 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Auto-refresh for real-time countdown updates
+# Auto-refresh for real-time countdown updates - more efficient approach
 if days_left >= 0:
-    time.sleep(1)
+    # Only refresh every 10 seconds to reduce load, or every second when less than 1 hour left
+    refresh_interval = 1 if (days_left == 0 and hours_left == 0) else 10
+    time.sleep(refresh_interval)
     st.rerun()

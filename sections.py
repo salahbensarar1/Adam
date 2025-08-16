@@ -128,7 +128,7 @@ def show_mission_section():
             <h4>🖥️ How Your Amazing Calculator Will Work:</h4>
             <div class="code-container">
                 <pre>🎮 Welcome to the Ultimate Calculator! 🎮 <br>
-<h5> Choose your mathematical adventure:</h5>
+Choose your mathematical adventure:<br>
 1️⃣ Addition (+)<br>
 2️⃣ Subtraction (-)<br>
 3️⃣ Multiplication (×)<br>
