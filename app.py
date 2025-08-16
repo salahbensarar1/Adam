@@ -23,7 +23,8 @@ st.write("CSS Loaded!" if get_css_styles() else "CSS Failed!")
 
 # Initialize session state
 if 'deadline' not in st.session_state:
-    st.session_state.deadline = datetime.datetime.now() + datetime.timedelta(days=30)
+    # Fixed deadline - 30 days programming challenge ending September 15, 2025
+    st.session_state.deadline = datetime.datetime(2025, 9, 15, 23, 59, 59)
 
 if 'completed_steps' not in st.session_state:
     st.session_state.completed_steps = set()
@@ -34,6 +35,7 @@ if 'user_name' not in st.session_state:
 # Calculate countdown
 now = datetime.datetime.now()
 time_left = st.session_state.deadline - now
+deadline_passed = time_left.total_seconds() < 0
 days_left = max(0, time_left.days)
 hours_left = max(0, time_left.seconds // 3600)
 minutes_left = max(0, (time_left.seconds % 3600) // 60)
@@ -101,7 +103,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Countdown Timer with better error handling
-if days_left >= 0:
+if not deadline_passed:
     st.markdown(f"""
     <div class="countdown-container">
         <h2>⏰ Mission Countdown Timer ⏰</h2>
@@ -216,6 +218,6 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Auto-refresh for real-time countdown updates
-if days_left >= 0:
+if not deadline_passed:
     time.sleep(1)
     st.rerun()
